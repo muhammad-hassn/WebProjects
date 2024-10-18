@@ -1,7 +1,7 @@
 "use client";
 import { urlfor } from "@/lib/sanity";
 import Image from "next/image";
-import { use, useState } from "react";
+import { useState } from "react";
 
 export interface Iprops {
   images: any[];

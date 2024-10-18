@@ -7,8 +7,6 @@ export interface simplifiedProduct{
     imageUrl : string
 } 
 
-
-
 export interface fullProduct{
     _id : string,
     name : string,
@@ -18,10 +16,4 @@ export interface fullProduct{
     image : any,
     description : string,
     price_id: string
-
 }
-
-
-
-
-  

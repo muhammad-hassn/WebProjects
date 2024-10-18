@@ -3,7 +3,6 @@ import { client } from "@/lib/sanity";
 import { simplifiedProduct } from "../interface";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import prodeuct from "@/sanity/schemaTypes/prodeuct";
 import Image from "next/image";
 
 async function GetData() {

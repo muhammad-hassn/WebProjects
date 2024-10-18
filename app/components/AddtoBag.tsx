@@ -1,7 +1,6 @@
 "use client";
 import { Button } from '@/components/ui/button'
 import { urlfor } from '@/lib/sanity';
-import React from 'react'
 import { useShoppingCart } from 'use-shopping-cart'
 
 export interface ProductCart{
