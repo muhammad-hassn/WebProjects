@@ -7,8 +7,8 @@ return(
 mode="payment" 
 cartMode="client-only"
 stripe={process.env.NEXT_PUBLIC_STRIPE_KEY as string }
-successUrl="https://nextcommerce-n72d.vercel.app//stripe/sucess"
-cancelUrl="https://nextcommerce-n72d.vercel.app//stripe/error"
+successUrl="https://nextcommerce-coral.vercel.app/stripe/sucess"
+cancelUrl="https://nextcommerce-coral.vercel.app/stripe/error"
 currency="USD"
 billingAddressCollection={false}
 shouldPersist={true}
