@@ -1,4 +1,5 @@
 import AddtoBag from "@/app/components/AddtoBag";
+import CheckOutNow from "@/app/components/CheckOutNow";
 import ImageGallery from "@/app/components/ImageGallery";
 import { fullProduct } from "@/app/interface";
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,7 @@ async function getData(slug: string) {
 
   return data;
 }
+export const dynamic = 'force-dynamic'
 export default async function productPage({
   params,
 }: {
@@ -75,7 +77,15 @@ export default async function productPage({
             key={data._id}
             price_id={data.price_id}
             />
-            <Button variant={"secondary"}>CheckOut Now</Button>
+            <CheckOutNow 
+            // variant={"secondary"}
+            name={data.name} 
+            price={data.price} 
+            description={data.description} 
+            image={data.image[0]} 
+            currency={"USD"} 
+            price_id={data.price_id} />
+            {/* <Button variant={"secondary"}>CheckOut Now</Button> */}
             </div>
 
             <p className="mt-12 text-base text-gray-500 tracking-wide">{data.description}</p>

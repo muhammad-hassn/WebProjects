@@ -24,7 +24,7 @@ const CheckOutNow = ({name , currency , description , image , price , price_id} 
         <Button
         onClick={() =>{ buyNow(product.price_id);
         }}
-        >Add To Cart</Button>
+        >Checkout Now</Button>
     </div>
   )
 }
