@@ -54,7 +54,7 @@ const LatestWork = () => {
             ))}
           </ul>
           <a
-            href="https://nextcommerce-coral.vercel.app/"
+            href="https://nextcommerce-ten-hazel.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-4 py-2 px-4 bg-[#1788ae] text-white rounded hover:bg-[#126b86] duration-200"
