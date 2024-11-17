@@ -23,7 +23,7 @@ const LatestWork = () => {
       </h2>
       <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-center mt-8 md:mt-12 py-2">
         <a
-          href="nextcommerce-ten-hazel.vercel.app"
+          href="https://nextcommerce-ten-hazel.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
           className="w-full md:w-1/2"
