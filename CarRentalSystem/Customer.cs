@@ -13,6 +13,7 @@ namespace CarRentalSystem
 {
     public partial class Customer : Form
     {
+        private CustomerOperations customerOps = new CustomerOperations();
         SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-6QEB6S6;Initial Catalog=CarRental;Persist Security Info=True;User ID=sa;Password=ker@4080");
 
         private void populate()
@@ -45,8 +46,9 @@ namespace CarRentalSystem
             m.Show();
         }
 
+
         private void button2_Click(object sender, EventArgs e)
-        { 
+        {
             // add button
             if (idTb.Text == " " || nameTb.Text == "" || phoneTb.Text == "")
             {
@@ -54,20 +56,8 @@ namespace CarRentalSystem
             }
             else
             {
-                try
-                {
-                    Con.Open();
-                    string query = "insert into CustomerTable values ('" + idTb.Text + "', '" + nameTb.Text + "' , '" + adressTb.Text + "' , " + phoneTb.Text + " )";
-                    SqlCommand cmd = new SqlCommand(query, Con);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Customer created sucessfully !");
-                    Con.Close();
-                    populate();
-                }
-                catch (Exception Myex)
-                {
-                    MessageBox.Show(Myex.Message);
-                }
+                customerOps.Insert(idTb.Text, nameTb.Text, adressTb.Text, phoneTb.Text);
+                populate();
             }
         }
 
@@ -88,20 +78,8 @@ namespace CarRentalSystem
             }
             else
             {
-                try
-                {
-                    Con.Open();
-                    string query = "update CustomerTable set CustName ='" + nameTb.Text + "' , CustAdd ='" + adressTb.Text +  "' , phone = " + phoneTb.Text + "  where Custid ='" + idTb.Text + "';";
-                    SqlCommand cmd = new SqlCommand(query, Con);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Customer sucessfully Updated !");
-                    Con.Close();
-                    populate();
-                }
-                catch (Exception Myex)
-                {
-                    MessageBox.Show(Myex.Message);
-                }
+                customerOps.Update(idTb.Text, nameTb.Text, adressTb.Text, phoneTb.Text);
+                populate();
             }
         }
 
@@ -137,6 +115,53 @@ namespace CarRentalSystem
                 }
             }
 
+        }
+    }
+
+    public abstract class DatabaseOperations
+    {
+        protected SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-6QEB6S6;Initial Catalog=CarRental;Persist Security Info=True;User ID=sa;Password=ker@4080");
+
+        public abstract void Insert(string id, string name, string address, string phone);
+        public abstract void Update(string id, string name, string address, string phone);
+    }
+    public class CustomerOperations : DatabaseOperations
+    {
+        public override void Insert(string id, string name, string address, string phone)
+        {
+
+            try
+            {
+                Con.Open();
+                string query = "insert into CustomerTable values ('" + id + "', '" + name + "' , '" + address + "' , " + phone + " )";
+                SqlCommand cmd = new SqlCommand(query, Con);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Customer created sucessfully !");
+                Con.Close();
+
+            }
+            catch (Exception Myex)
+            {
+                MessageBox.Show(Myex.Message);
+            }
+
+        }
+        public override void Update(string id, string name, string address, string phone)
+        {
+            try
+            {
+                Con.Open();
+                string query = "update CustomerTable set CustName ='" + name + "' , CustAdd ='" + address + "' , phone = " + phone + "  where Custid ='" + id + "';";
+                SqlCommand cmd = new SqlCommand(query, Con);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Customer sucessfully Updated !");
+                Con.Close();
+
+            }
+            catch (Exception Myex)
+            {
+                MessageBox.Show(Myex.Message);
+            }
         }
     }
 }

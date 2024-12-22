@@ -11,7 +11,8 @@ using System.Data.SqlClient;
 
 namespace CarRentalSystem
 {
-    public partial class Car : Form
+
+     public partial class Car : Form
     {
         public Car()
         {
@@ -30,14 +31,11 @@ namespace CarRentalSystem
             Con.Close();
         }
         SqlConnection Con = new SqlConnection(@"Data Source=DESKTOP-6QEB6S6;Initial Catalog=CarRental;Persist Security Info=True;User ID=sa;Password=ker@4080");
-        private void button2_Click(object sender, EventArgs e)
+
+
+        // Encapsulation
+        private void InsertCar()
         {
-            if (RegTb.Text == " " || modelTb.Text == "" || priceTb.Text == "" || brandTb.Text == " ")
-            {
-                MessageBox.Show("Missing informaion !");
-            }
-            else
-            {
                 try
                 {
                     Con.Open();
@@ -52,6 +50,18 @@ namespace CarRentalSystem
                 {
                     MessageBox.Show(Myex.Message);
                 }
+            
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (RegTb.Text == " " || modelTb.Text == "" || priceTb.Text == "" || brandTb.Text == " ")
+            {
+                MessageBox.Show("Missing informaion !");
+            }
+            else
+            {
+                InsertCar();
+                populate();
             }
         }
        
