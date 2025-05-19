@@ -23,9 +23,9 @@
                     
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div>
-                            <span class="h5 text-danger">₹{{ item.product.discounted_price }}</span>
+                            <span class="h5 text-danger">RS{{ item.product.discounted_price }}</span>
                             <small class="text-muted text-decoration-line-through ms-2">
-                                ₹{{ item.product.price }}
+                                RS{{ item.product.price }}
                             </small>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
             
             <div class="d-flex justify-content-between mb-2">
                 <span>Subtotal ({{ cart_items|length }} items)</span>
-                <span>₹{{ total|floatformat:2 }}</span>
+                <span>RS{{ total|floatformat:2 }}</span>
             </div>
             
             <div class="d-flex justify-content-between mb-3">
@@ -76,7 +76,7 @@
             
             <div class="d-flex justify-content-between fw-bold mb-4">
                 <span>Total Amount:</span>
-                <span class="text-primary">₹{{ total|floatformat:2 }}</span>
+                <span class="text-primary">RS{{ total|floatformat:2 }}</span>
             </div>
             
             <a href="{% url 'checkout' %}" 

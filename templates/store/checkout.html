@@ -40,7 +40,7 @@
                                 <h6 class="mb-1">{{ item.product.name }}</h6>
                                 <div class="d-flex justify-content-between">
                                     <small class="text-muted">Qty: {{ item.quantity }}</small>
-                                    <span class="text-primary">₹{{ item.product.price }}</span>
+                                    <span class="text-primary">RS{{ item.product.price }}</span>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                     <div class="order-total">
                         <div class="d-flex justify-content-between mb-2">
                             <span>Subtotal:</span>
-                            <span>₹{{ total }}</span>
+                            <span>RS{{ total }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Shipping:</span>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="d-flex justify-content-between fw-bold fs-5">
                             <span>Total:</span>
-                            <span class="text-primary">₹{{ total }}</span>
+                            <span class="text-primary">RS{{ total }}</span>
                         </div>
                     </div>
                 </div>
