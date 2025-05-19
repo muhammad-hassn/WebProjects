@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 fw-bold text-primary">Your Shopping Cart 🛒</h2>
+    
+    {% if cart_items %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+        {% for item in cart_items %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 hover-scale">
+                <div class="card-img-top position-relative overflow-hidden" style="height: 200px;">
+                    <img src="{{ item.product.image.url }}" 
+                         class="img-fluid w-100 h-100 object-fit-cover" 
+                         alt="{{ item.product.name }}">
+                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">
+                        -{{ item.product.discount_percent }}%
+                    </span>
+                </div>
+                
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ item.product.name }}</h5>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <span class="h5 text-danger">₹{{ item.product.discounted_price }}</span>
+                            <small class="text-muted text-decoration-line-through ms-2">
+                                ₹{{ item.product.price }}
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="quantity-control input-group" style="max-width: 120px;">
+                            <a href="{% url 'decrease_quantity' item.id %}" 
+                               class="btn btn-outline-secondary px-3">
+                                −
+                            </a>
+                            <input type="text" 
+                                   value="{{ item.quantity }}" 
+                                   class="form-control text-center border-secondary" 
+                                   readonly>
+                            <a href="{% url 'increase_quantity' item.id %}" 
+                               class="btn btn-outline-secondary px-3">
+                                +
+                            </a>
+                        </div>
+                        <a href="{% url 'remove_from_cart' item.id %}" 
+                           class="btn btn-link text-danger p-0" 
+                           title="Remove Item">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Order Summary -->
+    <div class="card border-0 shadow-lg sticky-top" style="top: 1rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-4">Order Summary</h5>
+            
+            <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal ({{ cart_items|length }} items)</span>
+                <span>₹{{ total|floatformat:2 }}</span>
+            </div>
+            
+            <div class="d-flex justify-content-between mb-3">
+                <span>Shipping</span>
+                <span class="text-success">FREE</span>
+            </div>
+            
+            <hr class="my-3">
+            
+            <div class="d-flex justify-content-between fw-bold mb-4">
+                <span>Total Amount:</span>
+                <span class="text-primary">₹{{ total|floatformat:2 }}</span>
+            </div>
+            
+            <a href="{% url 'checkout' %}" 
+               class="btn btn-primary w-100 py-3 rounded-pill">
+               <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+            </a>
+            
+            <div class="text-center mt-3">
+                <a href="{% url 'home' %}" class="text-decoration-none">
+                    <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    {% else %}
+    <div class="text-center py-5 my-5">
+        <div class="empty-cart-icon mb-4">
+            <i class="fas fa-shopping-cart fa-4x text-muted"></i>
+        </div>
+        <h4 class="mb-3">Your cart is empty</h4>
+        <p class="text-muted mb-4">Looks like you haven't added anything to your cart yet</p>
+        <a href="{% url 'home' %}" class="btn btn-primary px-5 rounded-pill">
+            Start Shopping <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .hover-scale {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-scale:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .quantity-control .btn {
+        border-radius: 50% !important;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .object-fit-cover {
+        object-fit: cover;
+        object-position: center;
+    }
+    
+    .empty-cart-icon {
+        opacity: 0.3;
+        transition: opacity 0.3s ease;
+    }
+    
+    .empty-cart-icon:hover {
+        opacity: 0.5;
+    }
+    
+    .sticky-top {
+        position: sticky;
+        z-index: 1020;
+    }
+</style>
+{% endblock %}

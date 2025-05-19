@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Product Image -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg">
+                <img src="{{ product.image.url }}" 
+                     class="card-img-top product-image" 
+                     alt="{{ product.name }}">
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h1 class="display-5 fw-bold mb-3">{{ product.name }}</h1>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="h2 text-primary me-3">₹{{ product.price }}</span>
+                        {% if product.quantity > 0 %}
+                            <span class="badge bg-success">In Stock</span>
+                        {% else %}
+                            <span class="badge bg-danger">Out of Stock</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="lead mb-4">{{ product.description }}</p>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="input-group quantity-selector" style="max-width: 150px;">
+                            <button class="btn btn-outline-secondary" type="button">−</button>
+                            <input type="number" class="form-control text-center" value="1" min="1">
+                            <button class="btn btn-outline-secondary" type="button">+</button>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-lg flex-grow-1">
+                            <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                        </button>
+                    </div>
+
+                    <div class="product-meta mb-4">
+                        <div class="d-flex gap-4 text-muted">
+                            <div>
+                                <i class="fas fa-box me-2"></i>
+                                <span>Available Quantity: {{ product.quantity }}</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-calendar-alt me-2"></i>
+                                <span>Added on {{ product.created_at|date:"M d, Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.product-image {
+    max-height: 600px;
+    object-fit: contain;
+    padding: 2rem;
+}
+
+.quantity-selector input {
+    width: 60px;
+    text-align: center;
+}
+
+.quantity-selector button {
+    width: 45px;
+}
+</style>
+{% endblock %}
