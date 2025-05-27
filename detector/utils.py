@@ -3,7 +3,8 @@ import numpy as np
 
 def detect_motion(video_path):
     cap = cv2.VideoCapture(video_path)
-    prev_frame = None
+    background_subtractor = cv2.createBackgroundSubtractorMOG2(history=500, detectShadows=False)
+    consecutive_motion_frames = 0
     alerts = []
     
     while cap.isOpened():
@@ -11,30 +12,38 @@ def detect_motion(video_path):
         if not ret:
             break
         
-        # Frame ko grayscale aur blur karo
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (21, 21), 0)
+        # Background Subtraction
+        fg_mask = background_subtractor.apply(frame)
         
-        # Pehla frame set karo
-        if prev_frame is None:
-            prev_frame = gray
-            continue
+        # Noise Removal (Morphological Operations)
+        kernel = np.ones((5,5), np.uint8)
+        fg_mask = cv2.morphologyEx(fg_mask, cv2.MORPH_OPEN, kernel)
+        fg_mask = cv2.dilate(fg_mask, kernel, iterations=2)
         
-        # Frame difference calculate karo
-        frame_diff = cv2.absdiff(prev_frame, gray)
-        thresh = cv2.threshold(frame_diff, 25, 255, cv2.THRESH_BINARY)[1]
-        thresh = cv2.dilate(thresh, None, iterations=2)
+        # Contour Detection
+        contours, _ = cv2.findContours(fg_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        motion_detected = False
         
-        # Contours dhoondo (motion areas)
-        contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        
-        # Agar contour ka area bada ho, toh alert karo
         for contour in contours:
-            if cv2.contourArea(contour) > 1000:
-                alerts.append("MOTION DETECTED: Possible Snatching! 🚨")
+            # Contour Area Check (Strict)
+            if cv2.contourArea(contour) < 10000:  # Only large movements
+                continue
+                
+            # Aspect Ratio Check (Snatching-like motion is usually elongated)
+            x, y, w, h = cv2.boundingRect(contour)
+            aspect_ratio = w / float(h)
+            if aspect_ratio < 0.3 or aspect_ratio > 3:  # Filter square-like contours
+                motion_detected = True
                 break
         
-        prev_frame = gray
-    
+        # Validate Motion Duration
+        if motion_detected:
+            consecutive_motion_frames += 1
+            if consecutive_motion_frames >= 10:  # Motion must last 10+ frames
+                alerts.append("MOTION DETECTED: Possible Snatching! 🚨")
+                consecutive_motion_frames = 0  # Reset to avoid duplicates
+        else:
+            consecutive_motion_frames = 0  # Reset counter
+        
     cap.release()
     return alerts
