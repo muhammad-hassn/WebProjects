@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="branding text-center mb-5">
+            <img src="{% static 'images/company-logo.png' %}" alt="Company Logo" class="logo mb-3">
+            <h1 class="h4 text-secondary mb-0">Employee Portal</h1>
+            <h2 class="h2 font-weight-bold text-primary">Sign In</h2>
+        </div>
+
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="form-group mb-4">
+                <label for="id_username" class="form-label text-muted small">User Name</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-person-fill text-muted"></i>
+                    </span>
+                    <input type="email" 
+                           class="form-control form-control-lg" 
+                           id="id_username" 
+                           name="username"
+                           placeholder="name@company.com" 
+                           required>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="id_password" class="form-label text-muted small">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-lock-fill text-muted"></i>
+                    </span>
+                    <input type="password" 
+                           class="form-control form-control-lg" 
+                           id="id_password" 
+                           name="password"
+                           placeholder="••••••••" 
+                           required>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label small text-muted" for="rememberMe">
+                        Remember me
+                    </label>
+                </div>
+                <a href="#" class="small text-primary text-decoration-none">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                Sign In <i class="bi bi-arrow-right-short"></i>
+            </button>
+
+        </form>
+    </div>
+
+    <div class="auth-footer text-center small text-muted mt-4">
+        © 2025 Company Name. All rights reserved
+    </div>
+</div>
+
+<style>
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 2rem;
+    }
+
+    .login-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .logo {
+        width: 80px;
+        height: auto;
+    }
+
+    .input-group-text {
+        background: white;
+        border-right: 0;
+    }
+
+    .form-control {
+        border-left: 0;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #dee2e6;
+    }
+
+    .auth-footer {
+        position: fixed;
+        bottom: 1rem;
+        left: 0;
+        right: 0;
+    }
+</style>
+{% endblock %}
