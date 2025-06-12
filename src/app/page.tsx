@@ -141,7 +141,7 @@ export default function Home() {
             </li>
             {/* instagram Logo */}
             <li>
-              <a href="https://www.instagram.com/_md.hassan__/" target="_blank">
+              <a href="https://www.instagram.com/muhammadhassan.40/" target="_blank">
                 <svg
                   className="w-7 hover:text-white hover:scale-125 duration-300"
                   xmlns="http://www.w3.org/2000/svg"
