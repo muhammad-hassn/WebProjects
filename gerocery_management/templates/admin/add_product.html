@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card border-0 shadow-lg overflow-hidden">
+        <div class="card-header bg-gradient-primary text-white py-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-cube fa-2x me-3"></i>
+                <div>
+                    <h1 class="h3 mb-0">Add New Product</h1>
+                    <p class="mb-0 opacity-75">Fill in the details below to list a new product</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-body p-4 p-md-5">
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <div class="row g-4">
+                    <!-- Left Column -->
+                    <div class="col-lg-6">
+                        <!-- Product Name -->
+                        <div class="form-floating mb-4">
+                            {% render_field form.name class="form-control form-control-lg" placeholder=" " %}
+                            <label for="{{ form.name.id_for_label }}">
+                                <i class="fas fa-tag me-2"></i>Product Name
+                            </label>
+                            <div class="invalid-feedback">
+                                Please provide a product name
+                            </div>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="form-floating mb-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light">RS</span>
+                                {% render_field form.price class="form-control form-control-lg" placeholder="0.00" step="0.01" %}
+                                <label for="{{ form.price.id_for_label }}">
+                                    <i class="fas fa-rupee-sign me-2"></i>Price
+                                </label>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a valid price
+                            </div>
+                        </div>
+
+                        <!-- Stock Quantity -->
+                        <div class="form-floating mb-4">
+                            {% render_field form.quantity class="form-control form-control-lg" min="0" %}
+                            <label for="{{ form.quantity.id_for_label }}">
+                                <i class="fas fa-boxes me-2"></i>Stock Quantity
+                            </label>
+                            <div class="invalid-feedback">
+                                Please enter stock quantity
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-lg-6">
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <div class="form-floating">
+                                {% render_field form.description class="form-control form-control-lg" placeholder=" " style="height: 150px" %}
+                                <label for="{{ form.description.id_for_label }}">
+                                    <i class="fas fa-align-left me-2"></i>Description
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <small class="text-muted">Max 500 characters</small>
+                                <small class="text-muted"><span id="charCount">0</span>/500</small>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a product description
+                            </div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold mb-3">
+                                <i class="fas fa-camera me-2"></i>Product Images
+                            </label>
+                            <div class="drop-zone border-2 rounded-3 p-4 text-center position-relative">
+                                <div class="drop-zone-content">
+                                    <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                                    <p class="mb-1">Drag and drop files here</p>
+                                    <p class="text-muted small mb-0">or</p>
+                                    <label for="imageUpload" class="btn btn-link text-decoration-none">
+                                        Browse Files
+                                    </label>
+                                </div>
+                                {% render_field form.image class="form-control visually-hidden" id="imageUpload" %}
+                                <div class="preview-container mt-3" id="imagePreview"></div>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please upload at least one product image
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="d-flex justify-content-between border-top pt-4">
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary px-4">
+                        <i class="fas fa-arrow-left me-2"></i>Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="fas fa-save me-2"></i>Publish Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+    
+    .drop-zone {
+        border: 2px dashed #dee2e6;
+        transition: all 0.3s ease;
+        background: rgba(99, 102, 241, 0.05);
+    }
+    
+    .drop-zone.dragover {
+        border-color: #6366f1;
+        background: rgba(99, 102, 241, 0.1);
+    }
+    
+    .form-floating label {
+        padding-left: 2.5rem;
+    }
+    
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        transform: scale(0.85) translateY(-1rem) translateX(0.15rem);
+    }
+    
+    .preview-container img {
+        max-width: 150px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+</style>
+
+<script>
+    // Drag and Drop Functionality
+    const dropZone = document.querySelector('.drop-zone');
+    const fileInput = document.getElementById('imageUpload');
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        fileInput.files = e.dataTransfer.files;
+        handleFileUpload(fileInput.files[0]);
+    });
+
+    // Image Upload Handling
+    fileInput.addEventListener('change', (e) => {
+        handleFileUpload(e.target.files[0]);
+    });
+
+    function handleFileUpload(file) {
+        const preview = document.getElementById('imagePreview');
+        if(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.innerHTML = `
+                    <div class="position-relative d-inline-block">
+                        <img src="${e.target.result}" class="img-thumbnail" alt="Preview">
+                        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1" 
+                            onclick="this.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Character Counter
+    document.getElementById('id_description').addEventListener('input', function(e) {
+        document.getElementById('charCount').textContent = e.target.value.length;
+    });
+
+    // Form Validation
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+{% endblock %}

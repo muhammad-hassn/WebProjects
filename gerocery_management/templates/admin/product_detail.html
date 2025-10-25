@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card border-0 shadow-lg" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-header bg-gradient-primary text-white py-4">
+            <h3 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Product</h3>
+        </div>
+        
+        <div class="card-body p-4">
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <!-- Product Name -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-dark mb-2">
+                        <i class="fas fa-tag text-primary me-2"></i>Product Name
+                    </label>
+                    <input type="text" 
+                           name="name" 
+                           value="{{ form.instance.name }}"
+                           class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+                           required>
+                    {% if form.name.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.name.errors.0 }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Price & Quantity -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark mb-2">
+                            <i class="fas fa-dollar-sign text-primary me-2"></i>Price
+                        </label>
+                        <input type="number" 
+                               name="price" 
+                               value="{{ form.instance.price }}"
+                               class="form-control {% if form.price.errors %}is-invalid{% endif %}"
+                               step="0.01"
+                               required>
+                        {% if form.price.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.price.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-dark mb-2">
+                            <i class="fas fa-boxes text-primary me-2"></i>Stock Quantity
+                        </label>
+                        <input type="number" 
+                               name="quantity" 
+                               value="{{ form.instance.quantity }}"
+                               class="form-control {% if form.quantity.errors %}is-invalid{% endif %}"
+                               required>
+                        {% if form.quantity.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.quantity.errors.0 }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-dark mb-2">
+                        <i class="fas fa-align-left text-primary me-2"></i>Description
+                    </label>
+                    <textarea name="description" 
+                              class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                              rows="4">{{ form.instance.description }}</textarea>
+                    {% if form.description.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.description.errors.0 }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Image Upload -->
+                <div class="mb-5">
+                    <label class="form-label fw-bold text-dark mb-2">
+                        <i class="fas fa-image text-primary me-2"></i>Product Image
+                    </label>
+                    <div class="input-group">
+                        <input type="file" 
+                               name="image" 
+                               class="form-control {% if form.image.errors %}is-invalid{% endif %}"
+                               accept="image/*">
+                    </div>
+                    {% if form.image.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.image.errors.0 }}
+                    </div>
+                    {% endif %}
+                    {% if form.instance.image %}
+                    <div class="mt-2">
+                        <small>Current Image:</small>
+                        <img src="{{ form.instance.image.url }}" 
+                             alt="Current product image" 
+                             class="img-thumbnail mt-2" 
+                             style="max-width: 150px;">
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Form Actions -->
+                <div class="d-flex justify-content-end gap-3 mt-4 pt-4 border-top">
+                    <button type="submit" class="btn btn-primary btn-lg px-4 py-2">
+                        <i class="fas fa-save me-2"></i>Update Product
+                    </button>
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary btn-lg px-4 py-2">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .img-thumbnail {
+        border-radius: 0.5rem;
+        padding: 0.25rem;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+</style>
+{% endblock %}

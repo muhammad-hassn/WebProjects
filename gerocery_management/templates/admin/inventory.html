@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>📦 Inventory Management</h2>
+    
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="card border-warning mb-3">
+                <div class="card-header bg-warning">
+                    <h5>Low Stock (Quantity < 5)</h5>
+                </div>
+                <div class="card-body">
+                    {% for product in low_stock %}
+                    <div class="alert alert-warning d-flex justify-content-between">
+                        <span>{{ product.name }}</span>
+                        <span class="badge bg-danger">{{ product.quantity }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5>Out of Stock</h5>
+                </div>
+                <div class="card-body">
+                    {% for product in out_of_stock %}
+                    <div class="alert alert-danger d-flex justify-content-between">
+                        <span>{{ product.name }}</span>
+                        <a href="{% url 'product_edit' product.id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
