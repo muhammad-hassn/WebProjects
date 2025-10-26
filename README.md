@@ -12,12 +12,12 @@ This repository contains a collection of web development and software projects b
 
 ### 🌐 Next.js Projects
 - **portfolio**: Personal portfolio website built with Next.js and TypeScript.  
-  ![Portfolio Screenshot](https://via.placeholder.com/400x200.png?text=Portfolio+Screenshot)  
-  [Live Demo](#)  
+  ![Portfolio Screenshot](https://portfolio-3ztz.vercel.app/)  
+  [Live Demo](https://portfolio-3ztz.vercel.app/)  
 
 - **EcommerceWeb**: Online shopping website using Next.js.  
-  ![Ecommerce Screenshot](https://via.placeholder.com/400x200.png?text=Ecommerce+Screenshot)  
-  [Live Demo](#)  
+  ![Ecommerce Screenshot](https://nextcommerce-ten-hazel.vercel.app/)  
+  [Live Demo](https://nextcommerce-ten-hazel.vercel.app/)  
 
 ### 🐍 Django Projects
 - **EMS**: Emergency management system using Django.  
