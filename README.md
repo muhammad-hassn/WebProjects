@@ -24,9 +24,44 @@ This repository contains a collection of web development and software projects b
 - **Snatching_Detector**: Theft detection system using Django.  
 - **gerocery_management**: Grocery store management system using Django.  
 
-#### How to Run Django Projects
+### 💻 C# Windows Forms Project
+- **Car_Rental_System**: Car rental management system built with C# Windows Forms.  
+
+### ⚡ Other Projects
+- **BootStrap-Project**: Simple website built using HTML and Bootstrap.  
+- **Tic-Tac-Toe**: Classic Tic-Tac-Toe game using HTML, CSS, and JS.  
+
+---
+
+## 🧰 Technologies Used
+- **Front-end**: HTML, CSS, Bootstrap, JavaScript, TypeScript, React  
+- **Back-end**: Django (Python)  
+- **Frameworks**: Next.js, Django  
+- **Desktop Applications**: C# Windows Forms  
+
+---
+
+## 🚀 Features
+- Full-stack web applications with dynamic functionality  
+- Responsive designs using Bootstrap and CSS  
+- Next.js projects support server-side rendering  
+- Django projects follow the models, views, templates architecture  
+- C# project is a desktop application using Windows Forms   
+
+---
+
+## 📦 How to Run
+
+### Next.js Projects
 ```bash
-cd EMS  # replace EMS with your Django project folder
+cd portfolio   # or EcommerceWeb
+npm install
+npm run dev
+```
+### Django Projects
+```bash
+cd EMS  # example
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+```
